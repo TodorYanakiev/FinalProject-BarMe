@@ -2,15 +2,25 @@ import java.util.Scanner;
 
 public class Main {
     public static void option1ListAllBarsFromClosetsToFurthest(int location) {
-
     }
 
     public static void option2ListOpenedBars(String time) {
-
     }
 
     public static void option3ShowMap(int location) {
+    }
 
+    public static boolean isTimeInCorrectFormat(String time) {
+        if (time.matches("^\\d{2}\\.\\d{2}$")) { //check if the format is hh.mm
+            String[] parts = time.split("\\.");
+            int hours = Integer.parseInt(parts[0]);
+            int minutes = Integer.parseInt(parts[1]);
+
+            if (hours >= 0 && hours <= 23 && minutes >= 0 && minutes <= 59) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {
@@ -38,30 +48,32 @@ public class Main {
         }
 
         System.out.println("Изберете опция: СПИСЪК ВСИЧКИ (1), СПИСЪК ОТВОРЕНИ (2), КАРТА (3)");
-        int option;
+        String option;
         while (true) {
-            try {
-                option = sc.nextInt();
-                while (true) {
-                    if (option == 1 || option == 2 || option == 3) {
-                        break;
-                    } else {
-                        System.out.println("Въведете валидна опция (1, 2 или 3): ");
-                        option = sc.nextInt();
-                    }
+            option = sc.next();
+            while (true) {
+                if (option.equals("1") || option.equals("2") || option.equals("3")) {
+                    break;
+                } else {
+                    System.out.println("Въведете валидна опция (1, 2 или 3): ");
+                    option = sc.next();
                 }
-                break;
-            } catch (Exception e) {
-                System.out.print("Въведете валидна опция (1, 2 или 3): ");
             }
+            break;
         }
 
-        if (option == 1) {
+        if (option.equals("1")) {
             option1ListAllBarsFromClosetsToFurthest(location);
-        } else if (option == 2) {
+        } else if (option.equals("2")) {
             System.out.println("Въведете желанто време: ");
             String time = sc.next();
-            //TODO make all inputs working
+            while (true) {
+                if (isTimeInCorrectFormat(time)) {
+                    break;
+                }
+                System.out.println("Въведете часа във валиден формат (чч.мм):");
+                time = sc.next();
+            }
             option2ListOpenedBars(time);
         } else {
             option3ShowMap(location);
