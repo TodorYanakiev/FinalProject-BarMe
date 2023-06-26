@@ -1,13 +1,15 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    public static void option1ListAllBarsFromClosetsToFurthest(int location) {
+    public static void option1ListAllBarsFromClosestToFurthest(int location, String[][] barsInfo) {
+
     }
 
-    public static void option2ListOpenedBars(String time) {
+    public static void option2ListOpenedBars(String time, String[][] barsInfo) {
     }
 
-    public static void option3ShowMap(int location) {
+    public static void option3ShowMap(int location, String[][] barsInfo) {
     }
 
     public static boolean isTimeInCorrectFormat(String time) {
@@ -62,8 +64,12 @@ public class Main {
             break;
         }
 
+        String[][] barsInfo = {{"Famous", "21.00", "03.00", "150"}, {"Enjoy", "08.00", "00.00", "250"}, {"Soho", "08.00", "00.00", "400"},
+                {"Италианския", "08.00", "00.00", "500"}, {"Приста", "10.00", "23.30", "600"}, {"Милениум", "21.00", "03.00", "750"},
+                {"Капитан Блъд", "07.00", "01.00", "800"}, {"Майстор Манол", "08.30", "23.45", "850"}, {"Българе", "16.00", "23.42", "950"},
+                {"STOP Mozzarella", "10.00", "00.00", "1050"}, {"Pizza Home", "08.00", "20.00", "1150"}, {"Бялата Къща", "07.00", "21.00", "1300"}};
         if (option.equals("1")) {
-            option1ListAllBarsFromClosetsToFurthest(location);
+            option1ListAllBarsFromClosestToFurthest(location, barsInfo);
         } else if (option.equals("2")) {
             System.out.println("Въведете желанто време: ");
             String time = sc.next();
@@ -74,9 +80,9 @@ public class Main {
                 System.out.println("Въведете часа във валиден формат (чч.мм):");
                 time = sc.next();
             }
-            option2ListOpenedBars(time);
+            option2ListOpenedBars(time, barsInfo);
         } else {
-            option3ShowMap(location);
+            option3ShowMap(location, barsInfo);
         }
     }
 }
