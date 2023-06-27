@@ -1,9 +1,34 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
+
 
 public class Main {
-    public static void option1ListAllBarsFromClosestToFurthest(int location, String[][] barsInfo) {
+    public static void option1ListAllBarsFromClosestToFurthest(int userLocation, String[][] barsInfo) {
+        int[] barsDistances = new int[barsInfo.length];
+        for (int i = 0; i < barsInfo.length; i++) {
+            int temp = Integer.parseInt(barsInfo[i][3]) - userLocation;
+            if (temp < 0) {
+                temp = Math.abs(temp);
+            }
+            barsInfo[i][3] = Integer.toString(temp);
+            barsDistances[i] = temp;
+        }
+        Arrays.sort(barsInfo, (a, b) -> Integer.compare(Integer.parseInt(a[3]), Integer.parseInt(b[3]))); //Sorts the array by the 3rd index(distance)
+        for (int i = 0; i < barsInfo.length; i++) {
+            barsInfo[i][3] = Integer.toString(Integer.parseInt(barsInfo[i][3]) + userLocation);
+        }
+        for (int i = 0; i < barsInfo.length; i++) {
+            for (int j = 0; j < barsInfo[0].length - 1; j++) {
+                System.out.print(barsInfo[i][j] + " ");
+            }
+            if (){
+                System.out.println(Integer.parseInt(barsInfo[i][3]) - 2 * (Integer.parseInt(barsInfo[i][3]) - userLocation));
+            }else{
+                System.out.print(barsInfo[i][3]);
 
+            }
+            System.out.println();
+        }
     }
 
     public static void option2ListOpenedBars(String time, String[][] barsInfo) {
@@ -64,10 +89,10 @@ public class Main {
             break;
         }
 
-        String[][] barsInfo = {{"Famous", "21.00", "03.00", "150"}, {"Enjoy", "08.00", "00.00", "250"}, {"Soho", "08.00", "00.00", "400"},
-                {"Италианския", "08.00", "00.00", "500"}, {"Приста", "10.00", "23.30", "600"}, {"Милениум", "21.00", "03.00", "750"},
-                {"Капитан Блъд", "07.00", "01.00", "800"}, {"Майстор Манол", "08.30", "23.45", "850"}, {"Българе", "16.00", "23.42", "950"},
-                {"STOP Mozzarella", "10.00", "00.00", "1050"}, {"Pizza Home", "08.00", "20.00", "1150"}, {"Бялата Къща", "07.00", "21.00", "1300"}};
+        String[][] barsInfo = {{"Famous", "21.00", "03.00", "500"}, {"Enjoy", "08.00", "00.00", "250"}, {"Soho", "08.00", "00.00", "400"},
+                {"Италианския", "08.00", "00.00", "800"}, {"Приста", "10.00", "23.30", "850"}, {"Милениум", "21.00", "03.00", "1300"},
+                {"Капитан Блъд", "07.00", "01.00", "150"}, {"Майстор Манол", "08.30", "23.45", "600"}, {"Българе", "16.00", "23.42", "950"},
+                {"STOP Mozzarella", "10.00", "00.00", "1050"}, {"Pizza Home", "08.00", "20.00", "1150"}, {"Бялата Къща", "07.00", "21.00", "750"}};
         if (option.equals("1")) {
             option1ListAllBarsFromClosestToFurthest(location, barsInfo);
         } else if (option.equals("2")) {
