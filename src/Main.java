@@ -1,6 +1,4 @@
 import java.util.*;
-import java.io.*;
-
 
 public class Main {
     public static void option1ListAllBarsFromClosestToFurthest(int userLocation, String[][] barsInfo) {
@@ -11,7 +9,7 @@ public class Main {
             }
             barsInfo[i][4] = Integer.toString(temp);
         }
-        Arrays.sort(barsInfo, (a, b) -> Integer.compare(Integer.parseInt(a[4]), Integer.parseInt(b[4]))); //Sorts the array by the 3rd index(distance)
+        Arrays.sort(barsInfo, (a, b) -> Integer.compare(Integer.parseInt(a[4]), Integer.parseInt(b[4]))); //Sorts the array by the 4th index(distance)
         for (int i = 0; i < barsInfo.length; i++) {
             System.out.println(String.format("%d. %s (%s - %s) - %sм",
                     i + 1, barsInfo[i][0], barsInfo[i][1], barsInfo[i][2], barsInfo[i][3]));
@@ -21,7 +19,38 @@ public class Main {
     public static void option2ListOpenedBars(String time, String[][] barsInfo) {
     }
 
-    public static void option3ShowMap(int location, String[][] barsInfo) {
+    public static void option3ShowMap(int userLocation, String[][] barsInfo) {
+        Arrays.sort(barsInfo, (a, b) -> Integer.compare(Integer.parseInt(a[4]), Integer.parseInt(b[4])));
+        int distance;
+        if (userLocation > Integer.parseInt(barsInfo[barsInfo.length - 1][4])) {
+            distance = userLocation / 50;
+        } else {
+            distance = Integer.parseInt(barsInfo[barsInfo.length - 1][4]) / 50;
+        }
+
+        ArrayList<String> barsMap = new ArrayList<>();
+        for (int i = 0; i < distance; i++) {
+            barsMap.add("_");
+        }
+
+        barsMap.add(userLocation / 50, "X");
+
+        for (int i = 0; i < barsInfo.length; i++) {
+            if (userLocation / 50 > Integer.parseInt(barsInfo[i][4]) / 50) {
+                barsMap.add(Integer.parseInt(barsInfo[i][4]) / 50 + i, Integer.toString(i + 1));
+            }else{
+                barsMap.add(Integer.parseInt(barsInfo[i][4]) / 50 + i + 1, Integer.toString(i + 1));
+            }
+        }
+
+        int size = barsMap.size();
+        for (int i = 0; i < size; i++) {
+            System.out.print(barsMap.get(i));
+        }
+        System.out.println();
+        for (int i = 0; i < barsInfo.length; i++) {
+            System.out.println(i + 1 + ". " + barsInfo[i][0]);
+        }
     }
 
     public static boolean isTimeInCorrectFormat(String time) {
