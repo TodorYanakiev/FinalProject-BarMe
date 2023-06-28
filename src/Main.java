@@ -2,14 +2,16 @@ import java.util.*;
 
 public class Main {
     public static void option1ListAllBarsFromClosestToFurthest(int userLocation, String[][] barsInfo) {
+        //Finds the distance between the user and every bar
         for (int i = 0; i < barsInfo.length; i++) {
-            int temp = Integer.parseInt(barsInfo[i][4]) - userLocation;
+            int temp = Integer.parseInt(barsInfo[i][3]) - userLocation;
             if (temp < 0) {
                 temp = Math.abs(temp);
             }
-            barsInfo[i][4] = Integer.toString(temp);
+            barsInfo[i][3] = Integer.toString(temp);
         }
-        Arrays.sort(barsInfo, (a, b) -> Integer.compare(Integer.parseInt(a[4]), Integer.parseInt(b[4]))); //Sorts the array by the 4th index(distance)
+
+        Arrays.sort(barsInfo, (a, b) -> Integer.compare(Integer.parseInt(a[3]), Integer.parseInt(b[3]))); //index 3 is for distance
         for (int i = 0; i < barsInfo.length; i++) {
             System.out.println(String.format("%d. %s (%s - %s) - %sм",
                     i + 1, barsInfo[i][0], barsInfo[i][1], barsInfo[i][2], barsInfo[i][3]));
@@ -105,12 +107,12 @@ public class Main {
             break;
         }
 
-        String[][] barsInfo = {{"Famous", "21.00", "03.00", "500", "500"}, {"Enjoy", "08.00", "00.00", "250", "250"},
-                {"Soho", "08.00", "00.00", "400", "400"}, {"Италианския", "08.00", "00.00", "800", "800"},
-                {"Приста", "10.00", "23.30", "850", "850"}, {"Милениум", "21.00", "03.00", "1300", "1300"},
-                {"Капитан Блъд", "07.00", "01.00", "150", "150"}, {"Майстор Манол", "08.30", "23.45", "600", "600"},
-                {"Българе", "16.00", "23.42", "950", "950"}, {"STOP Mozzarella", "10.00", "00.00", "1050", "1050"},
-                {"Pizza Home", "08.00", "20.00", "1150", "1150"}, {"Бялата Къща", "07.00", "21.00", "750", "750"}};
+        String[][] barsInfo = {{"Famous", "21.00", "03.00", "500"}, {"Enjoy", "08.00", "00.00", "250"},
+                {"Soho", "08.00", "00.00", "400"}, {"Италианския", "08.00", "00.00", "800"},
+                {"Приста", "10.00", "23.30", "850"}, {"Милениум", "21.00", "03.00", "1300"},
+                {"Капитан Блъд", "07.00", "01.00", "150"}, {"Майстор Манол", "08.30", "23.45", "600"},
+                {"Българе", "16.00", "23.42", "950"}, {"STOP Mozzarella", "10.00", "00.00", "1050"},
+                {"Pizza Home", "08.00", "20.00", "1150"}, {"Бялата Къща", "07.00", "21.00", "750"}};
         if (option.equals("1")) {
             option1ListAllBarsFromClosestToFurthest(location, barsInfo);
         } else if (option.equals("2")) {
