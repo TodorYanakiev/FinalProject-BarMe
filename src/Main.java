@@ -1,4 +1,7 @@
+import java.time.LocalTime;
 import java.util.*;
+
+import static java.lang.CharSequence.compare;
 
 public class Main {
     public static void option1ListAllBarsFromClosestToFurthest(int userLocation, String[][] barsInfo) {
@@ -18,16 +21,39 @@ public class Main {
         }
     }
 
-    public static void option2ListOpenedBars(String time, String[][] barsInfo) {
+    public static void option2ListOpenBars(String time, String[][] barsInfo) {
+        Arrays.sort(barsInfo, (a, b) -> compare((a[2]), (b[2])));
+        LocalTime userTime = LocalTime.parse(time);
+        int barNum = 1;
+        for (int i = 0; i < barsInfo.length; i++) {
+            LocalTime openingTime = LocalTime.parse(barsInfo[i][1]);
+            LocalTime closingTime = LocalTime.parse(barsInfo[i][2]);
+            if (isBarOpen(userTime, openingTime, closingTime)) {
+                System.out.println(String.format("%d. %s (%s - %s)", barNum, barsInfo[i][0], barsInfo[i][1], barsInfo[i][2]));
+                barNum++;
+            }
+        }
+    }
+
+    public static boolean isBarOpen(LocalTime userTime, LocalTime openingTime, LocalTime closingTime) {
+        if (closingTime.isBefore(openingTime)) {
+            if (userTime.isAfter(openingTime) || userTime.isBefore(closingTime) ||
+                    userTime.equals(closingTime) || userTime.equals(openingTime)) return true;
+
+        } else {
+            if (userTime.isAfter(openingTime) && userTime.isBefore(closingTime) ||
+                    userTime.equals(closingTime) || userTime.equals(openingTime)) return true;
+        }
+        return false;
     }
 
     public static void option3ShowMap(int userLocation, String[][] barsInfo) {
-        Arrays.sort(barsInfo, (a, b) -> Integer.compare(Integer.parseInt(a[4]), Integer.parseInt(b[4])));
+        Arrays.sort(barsInfo, (a, b) -> Integer.compare(Integer.parseInt(a[3]), Integer.parseInt(b[3])));
         int distance;
-        if (userLocation > Integer.parseInt(barsInfo[barsInfo.length - 1][4])) {
+        if (userLocation > Integer.parseInt(barsInfo[barsInfo.length - 1][3])) {
             distance = userLocation / 50;
         } else {
-            distance = Integer.parseInt(barsInfo[barsInfo.length - 1][4]) / 50;
+            distance = Integer.parseInt(barsInfo[barsInfo.length - 1][3]) / 50;
         }
 
         ArrayList<String> barsMap = new ArrayList<>();
@@ -38,10 +64,10 @@ public class Main {
         barsMap.add(userLocation / 50, "X");
 
         for (int i = 0; i < barsInfo.length; i++) {
-            if (userLocation / 50 > Integer.parseInt(barsInfo[i][4]) / 50) {
-                barsMap.add(Integer.parseInt(barsInfo[i][4]) / 50 + i, Integer.toString(i + 1));
-            }else{
-                barsMap.add(Integer.parseInt(barsInfo[i][4]) / 50 + i + 1, Integer.toString(i + 1));
+            if (userLocation / 50 > Integer.parseInt(barsInfo[i][3]) / 50) {
+                barsMap.add(Integer.parseInt(barsInfo[i][3]) / 50 + i, Integer.toString(i + 1));
+            } else {
+                barsMap.add(Integer.parseInt(barsInfo[i][3]) / 50 + i + 1, Integer.toString(i + 1));
             }
         }
 
@@ -56,8 +82,8 @@ public class Main {
     }
 
     public static boolean isTimeInCorrectFormat(String time) {
-        if (time.matches("^\\d{2}\\.\\d{2}$")) { //check if the format is hh.mm
-            String[] parts = time.split("\\.");
+        if (time.matches("^\\d{2}\\:\\d{2}$")) { //check if the format is hh.mm
+            String[] parts = time.split("\\:");
             int hours = Integer.parseInt(parts[0]);
             int minutes = Integer.parseInt(parts[1]);
 
@@ -107,12 +133,13 @@ public class Main {
             break;
         }
 
-        String[][] barsInfo = {{"Famous", "21.00", "03.00", "500"}, {"Enjoy", "08.00", "00.00", "250"},
-                {"Soho", "08.00", "00.00", "400"}, {"Италианския", "08.00", "00.00", "800"},
-                {"Приста", "10.00", "23.30", "850"}, {"Милениум", "21.00", "03.00", "1300"},
-                {"Капитан Блъд", "07.00", "01.00", "150"}, {"Майстор Манол", "08.30", "23.45", "600"},
-                {"Българе", "16.00", "23.42", "950"}, {"STOP Mozzarella", "10.00", "00.00", "1050"},
-                {"Pizza Home", "08.00", "20.00", "1150"}, {"Бялата Къща", "07.00", "21.00", "750"}};
+        String[][] barsInfo = {{"Famous", "21:00", "03:00", "500"}, {"Enjoy", "08:00", "00:00", "250"},
+                {"Soho", "08:00", "00:00", "400"}, {"Италианския", "08:00", "00:00", "800"},
+                {"Приста", "10:00", "23:30", "850"}, {"Милениум", "21:00", "03:00", "1300"},
+                {"Капитан Блъд", "07:00", "01:00", "150"}, {"Майстор Манол", "08:30", "23:45", "600"},
+                {"Българе", "16:00", "23:42", "950"}, {"STOP Mozzarella", "10:00", "00:00", "1050"},
+                {"Pizza Home", "08:00", "20:00", "1150"}, {"Бялата Къща", "07:00", "21:00", "750"}};
+
         if (option.equals("1")) {
             option1ListAllBarsFromClosestToFurthest(location, barsInfo);
         } else if (option.equals("2")) {
@@ -122,10 +149,10 @@ public class Main {
                 if (isTimeInCorrectFormat(time)) {
                     break;
                 }
-                System.out.println("Въведете часа във валиден формат (чч.мм):");
+                System.out.println("Въведете часа във валиден формат (чч:мм):");
                 time = sc.next();
             }
-            option2ListOpenedBars(time, barsInfo);
+            option2ListOpenBars(time, barsInfo);
         } else {
             option3ShowMap(location, barsInfo);
         }
