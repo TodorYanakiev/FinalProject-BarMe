@@ -7,11 +7,11 @@ public class Main {
     public static void option1ListAllBarsFromClosestToFurthest(int userLocation, String[][] barsInfo) {
         //Finds the distance between the user and every bar
         for (int i = 0; i < barsInfo.length; i++) {
-            int temp = Integer.parseInt(barsInfo[i][3]) - userLocation;
-            if (temp < 0) {
-                temp = Math.abs(temp);
+            int distance = Integer.parseInt(barsInfo[i][3]) - userLocation;
+            if (distance < 0) {
+                distance = Math.abs(distance);
             }
-            barsInfo[i][3] = Integer.toString(temp);
+            barsInfo[i][3] = Integer.toString(distance);
         }
 
         Arrays.sort(barsInfo, (a, b) -> Integer.compare(Integer.parseInt(a[3]), Integer.parseInt(b[3]))); //index 3 is for distance
@@ -82,7 +82,7 @@ public class Main {
     }
 
     public static boolean isTimeInCorrectFormat(String time) {
-        if (time.matches("^\\d{2}\\:\\d{2}$")) { //check if the format is hh.mm
+        if (time.matches("^\\d{2}\\:\\d{2}$")) { //check if the format is hh:mm
             String[] parts = time.split("\\:");
             int hours = Integer.parseInt(parts[0]);
             int minutes = Integer.parseInt(parts[1]);
