@@ -103,6 +103,13 @@ public class Main {
                 String userLocation = sc.nextLine();
                 char lastChar = userLocation.charAt(userLocation.length() - 1);
                 while (true) {
+                    location = Integer.parseInt(userLocation.substring(0, userLocation.length() - 1));
+                    if (location < 0){
+                        System.out.println("Локацията трябва да е положително число! Въведете наново:");
+                        userLocation = sc.nextLine();
+                        lastChar = userLocation.charAt(userLocation.length() - 1);
+                        continue;
+                    }
                     if (!Character.isDigit(lastChar)) {
                         break;
                     } else {
@@ -111,7 +118,6 @@ public class Main {
                         lastChar = userLocation.charAt(userLocation.length() - 1);
                     }
                 }
-                location = Integer.parseInt(userLocation.substring(0, userLocation.length() - 1));
                 break;
             } catch (Exception e) {
                 System.out.print("Въведете дължината и съкращението слято (пример: 240m): ");
