@@ -71,6 +71,7 @@ public class Main {
             }
         }
 
+        System.out.println("Всяко \'_\' отговаря на 50 метра.");
         int size = barsMap.size();
         for (int i = 0; i < size; i++) {
             System.out.print(barsMap.get(i));
